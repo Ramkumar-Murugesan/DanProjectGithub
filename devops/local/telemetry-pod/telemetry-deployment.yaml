@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: danprojectgithub-telemetry
+  name: danprojectgithub-telemetry
+  namespace: danprojectgithub
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: danprojectgithub-telemetry
+    spec:
+      containers:
+      - name: vault-container
+        image: vault
+        ports:
+        - containerPort: 8200
+          name: vaultport
+          protocol: TCP
+        securityContext:
+         capabilities:
+           add:
+             - IPC_LOCK
+        env:
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: vault-danprojectgithub-2019

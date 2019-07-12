@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: danprojectgithub-app
+  namespace: danprojectgithub
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: danprojectgithub-app
+    spec:
+      containers:
+        - name: node-container
+          imagePullPolicy: Always
+          image: tharanirajan/danprojectgithub-app:2.0
+          ports:
+            - name: http-port
+              containerPort: 3000
+          env:
+            - name: danprojectgithub-app-db
+              value: danprojectgithub-app-db
+            - name: VAULT_API
+              value: "http://vault.danprojectgithub.svc.cluster.local:8200"  
